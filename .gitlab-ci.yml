@@ -1,0 +1,103 @@
+.kubectl: &kubectl
+  - kubectl config use-context hyve-mobile/gitlab.cicd.agents.config:hyvesdp-eks-main
+  # The variables below need to be updated whenever
+  # a secret variable is added to GitLab CI variables
+  - find .kubernetes/hyvesdp-eks/$(echo $CI_ENVIRONMENT_NAME | tr '[:upper:]' '[:lower:]') -name '*.yml' -print0 | xargs -0 cat | envsubst '$CI_COMMIT_SHORT_SHA $CI_BUILD_ID $CI_PROJECT_PATH_SLUG $CI_PIPELINE_ID' | kubectl apply -f -
+
+.deployment: &spec
+  stage: deploy
+  when: manual
+  image:
+    # keep aligned with EKS cluster version
+    name: alpine/k8s:1.27.7
+  script: *kubectl
+  dependencies: []
+
+variables:
+  AWS_ECR_ENDPOINT: 376181236267.dkr.ecr.eu-west-1.amazonaws.com
+  DEPLOY_APPLICATION:
+    value: "false"
+    options:
+      - "false"
+      - "true"
+    description: "This sets whether to build/push an image and to enable deploys. Set to false by default"
+
+stages:
+  - test
+  - dependency
+  - build
+  - deploy
+
+test:npm-audit-sast:
+  stage: test
+  tags:
+    - hyve
+  image: node:lts-alpine
+  script:
+    - npm version
+    - npm audit --audit-level=high --no-unicode --no-color
+  allow_failure: false
+  rules:
+    - if: '$CI_PIPELINE_SOURCE == "merge_request_event" || $CI_PIPELINE_SOURCE == "parent_pipeline" || $CI_COMMIT_REF_NAME == $CI_DEFAULT_BRANCH'
+      when: always
+    - if: '$DEPLOY_APPLICATION == "false"'
+      when: never
+    - when: always
+
+dependency:npm:
+  stage: dependency
+  tags:
+    - hyve
+  image: node:lts-alpine
+  script:
+    - npm prune
+    - npm install
+  cache:
+    key: ${CI_COMMIT_REF_NAME}
+    paths:
+      - node_modules/
+  artifacts:
+    paths:
+      - node_modules/
+  only:
+    refs:
+      - main
+      - master
+      - develop
+    changes:
+      - package.json
+
+build:docker:
+  stage: build
+  tags:
+    - hyve
+  image:
+    name: gcr.io/kaniko-project/executor:v1.17.0-debug
+    entrypoint: [""]
+  script:
+    - /kaniko/executor
+      --build-arg "NODE_ENV=${CI_ENVIRONMENT_NAME}"
+      --build-arg "ENV_FILE=.env.staging"
+      --dockerfile "${CI_PROJECT_DIR}/Dockerfile"
+      --destination "${AWS_ECR_ENDPOINT}/hyve/masterstream/storybook:${CI_COMMIT_SHORT_SHA}"
+      --context "${CI_PROJECT_DIR}"
+  dependencies:
+    - dependency:npm
+  rules:
+    - if: '$CI_PIPELINE_SOURCE == "merge_request_event" || $CI_PIPELINE_SOURCE == "parent_pipeline" || $CI_COMMIT_REF_NAME == $CI_DEFAULT_BRANCH'
+      when: always
+    - if: '$DEPLOY_APPLICATION == "false"'
+      when: never
+    - when: manual
+
+staging:
+  tags:
+    - hyve
+  environment: Staging
+  <<: *spec
+  rules:
+    - if: '$CI_PIPELINE_SOURCE == "merge_request_event" || $CI_PIPELINE_SOURCE == "parent_pipeline" || $CI_COMMIT_REF_NAME == $CI_DEFAULT_BRANCH'
+      when: manual
+    - if: '$DEPLOY_APPLICATION == "false"'
+      when: never
+    - when: manual

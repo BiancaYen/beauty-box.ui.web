@@ -1,0 +1,66 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: hm-staging-masterstream-storybook
+  namespace: hm-staging-masterstream
+  labels:
+    app: "hm-staging-masterstream-storybook"
+    pipeline_id: "$CI_PIPELINE_ID"
+  annotations:
+    app.gitlab.com/app: $CI_PROJECT_PATH_SLUG
+    app.gitlab.com/env: staging
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: hm-staging-masterstream-storybook
+  template:
+    metadata:
+      labels:
+        app: hm-staging-masterstream-storybook
+      annotations:
+        app.gitlab.com/app: $CI_PROJECT_PATH_SLUG
+        app.gitlab.com/env: staging
+    spec:
+      containers:
+        - name: hm-staging-masterstream-storybook
+          image: "376181236267.dkr.ecr.eu-west-1.amazonaws.com/hyve/masterstream/storybook:$CI_COMMIT_SHORT_SHA"
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 6006
+          env:
+            - name: ENVIRONMENT
+              value: staging
+            - name: APP_NAME
+              value: hm-staging-masterstream-storybook
+          resources:
+            requests:
+              memory: 4096M
+              cpu: 500m
+            limits:
+              memory: 4096M
+              cpu: 500m
+          readinessProbe:
+            httpGet:
+              path: /
+              port: 6006
+              scheme: HTTP
+            failureThreshold: 3
+            initialDelaySeconds: 30
+            timeoutSeconds: 10
+            periodSeconds: 10
+          livenessProbe:
+            httpGet:
+              path: /
+              port: 6006
+              scheme: HTTP
+            failureThreshold: 3
+            initialDelaySeconds: 60
+            timeoutSeconds: 10
+            periodSeconds: 10
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 0
+      maxSurge: 100%

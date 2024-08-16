@@ -1,0 +1,140 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --color-background: #FFFFFF;
+    --color-default-black: #000000;
+    --color-default-white: #ffffff;
+    --color-default-whiteRGB: 255 255 255;
+    --color-exception-cardTag: #292929;
+    --color-primary-default: #F28482;
+    --color-primary-default-rgb: 242, 132, 130;
+    --color-primary-shade-1: #EF6E6B;
+    --color-primary-shade-2: #EB4A47;
+    --color-primary-tint-1: #F7B6B5;
+    --color-primary-tint-1-rgb: 247, 182, 181;
+    --color-primary-tint-2: #FBDBDA;
+    --color-secondary-default: #84A59D;
+    --color-secondary-default-rgb: 132, 165, 157;
+    --color-tertiary-default: #F6BD60;
+    --color-system-default: #000000;
+    --color-system-default-tint-1: #9f9f9f;
+    --color-system-default-tint-2: #c7c7c7;
+    --color-system-default-tint-3: #eeeeee;
+    --color-text-primary: #28282B;
+    --color-text-primary-contrast: #FFF;
+
+    --gradient-lg-neutral-dark-to-top: linear-gradient(
+      to top,
+      var(--color-system-default),
+      rgba(0, 0, 0, 0)
+    );
+
+    --gradient-lg-neutral-light-114deg: linear-gradient(
+            114deg,
+            #fcfcfc 1%,
+            #e9e9e9
+    );
+
+    --gradient-lg-neutral-light-134deg: linear-gradient(
+      134deg,
+      #fcfcfc 2%,
+      #e9e9e9
+    );
+
+    --gradient-lg-primary-dark-135deg: linear-gradient(
+      135deg,
+      var(--color-primary),
+      var(--color-system-default) 100%
+    );
+    --gradient-lg-primary-light-135deg: linear-gradient(
+      135deg,
+      var(--color-primary),
+      var(--color-default-white) 100%
+    );
+  }
+
+  :root[data-theme="white-label"] {
+    --color-default-black: #000000;
+    --color-default-white: #ffffff;
+    --color-exception-cardTag: #515c6c;
+    --color-primaryDefault: #382a8c;
+    --color-primaryShade1: #d55233;
+    --color-primaryTint1: #f7bdaf;
+    --color-primaryTint2: #fdeeea;
+    --color-system-default: #515c6c;
+    --color-system-defaultTint1: #9198a2;
+    --color-system-defaultTint2: #d1d4d8;
+    --color-system-defaultTint3: #e3e5e8;
+
+    --gradient-lg-neutral-dark-to-top: linear-gradient(
+      to top,
+      var(--color-system-default),
+      rgba(81, 92, 108, 0)
+    );
+    --gradient-lg-neutral-light-134deg: linear-gradient(
+      134deg,
+      var(--color-system-defaultTint1, #fcfcfc) 2%,
+      var(--color-system-defaultTint2, #e9e9e9)
+    );
+    --gradient-lg-primary-dark-135deg: linear-gradient(
+      135deg,
+      var(--color-primaryDefault),
+      var(--color-system-default) 100%
+    );
+    --gradient-lg-primary-light-135deg: linear-gradient(
+      135deg,
+      var(--color-primaryDefault),
+      var(--color-default-white) 100%
+    );
+  }
+}
+
+/* Hide scrollbars */
+* {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+
+  &::-webkit-scrollbar {
+    width: 0;
+  }
+}
+
+body {
+  overflow-x: hidden;
+}
+
+/* Optional scrollbar */
+.has-scrollbar {
+  scrollbar-width: 4px;
+
+  &::-webkit-scrollbar {
+    width: 4px;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background-color: var(--color-primaryDefault);
+    border-radius: 4px;
+  }
+}
+
+.show-scrollbar-thumb::-webkit-scrollbar-thumb {
+  background-color: var(--color-primaryDefault);
+}
+
+/* clears the ‘X’ from Internet Explorer */
+input[type=search]::-ms-clear { display: none; width : 0; height: 0; }
+input[type=search]::-ms-reveal { display: none; width : 0; height: 0; }
+/* clears the ‘X’ from Chrome */
+input[type="search"]::-webkit-search-decoration,
+input[type="search"]::-webkit-search-cancel-button,
+input[type="search"]::-webkit-search-results-button,
+input[type="search"]::-webkit-search-results-decoration { display: none; }
+
+* {
+  -webkit-tap-highlight-color: transparent;
+}
+
+

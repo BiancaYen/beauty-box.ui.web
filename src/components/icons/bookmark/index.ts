@@ -1,0 +1,1 @@
+export { BookmarkIcon } from './bookmark';

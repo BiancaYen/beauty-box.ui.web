@@ -1,0 +1,21 @@
+<svg width="100" height="100" xmlns="http://www.w3.org/2000/svg">
+    <defs>
+        <linearGradient x1="5.9%" y1="48.088%" x2="85.916%" y2="36.156%" id="a">
+            <stop stop-color="#FFD12C" offset="0%"/>
+            <stop stop-color="#FF5F90" offset="100%"/>
+        </linearGradient>
+        <linearGradient x1="74.752%" y1="74.391%" x2="0%" y2="74.391%" id="b">
+            <stop stop-color="#FF7FE3" offset="0%"/>
+            <stop stop-color="#E60000" offset="100%"/>
+        </linearGradient>
+        <linearGradient x1="92.438%" y1="105.2%" x2="31.97%" y2="15.3%" id="c">
+            <stop stop-color="#6B109F" offset="0%"/>
+            <stop stop-color="#3BF2FF" offset="100%"/>
+        </linearGradient>
+    </defs>
+    <g fill="none">
+        <path d="M50.587 37.811c-9.237 2.641-10.474 4.073-11.892 5.942l-.168.222c-1.332 1.756-3.09 3.938-11.678 7.834C8.577 60.1-5.913 48.411 2.407 28.256 8.07 14.539 24.308-2.478 43.218.3c18.91 2.779 32.479 30.332 7.369 37.51z" fill="url(#a)" style="mix-blend-mode:multiply" transform="translate(7.308 14.23)"/>
+        <path d="M22.202 40.91c-.945 6.59 5.301 18.724 23.231 13.44 8.786-2.59 9.566-5.872 10.16-9.247l.073-.414c.581-3.314 1.29-6.694 9.48-9.577l.522-.18c17.719-5.964 16.45-19.184 10.407-23.649L68.96 5.46C62.078.109 50.947-.23 43.506 4.767c-9.704 6.516-19.408 22.915-21.304 36.142z" fill="url(#b)" style="mix-blend-mode:multiply" transform="translate(7.308 14.23)"/>
+        <path d="M53.505 67.07c3.208 7.634 4.927 4.216 7.174-.829l.394-.887c.831-1.867 1.53-8.307 6.282-13.306 6.703-7.053 18.597-10.971 15.056-16.83-3.542-5.858 8.2-10.997 0-19.581-5.622-5.887-29.323 1.097-40.807 11.614-13.616 12.469-6.245 21.216-1.819 23.683 6.696 4.925 11.27 10.303 13.72 16.136z" fill="url(#c)" style="mix-blend-mode:multiply" transform="translate(7.308 14.23)"/>
+    </g>
+</svg>

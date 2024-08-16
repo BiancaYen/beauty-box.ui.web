@@ -1,0 +1,9 @@
+<svg width="50" height="50" viewBox="0 0 50 50" xmlns="http://www.w3.org/2000/svg" style="background:#fff">
+    <defs>
+        <radialGradient cx="30.582%" cy="2.727%" fx="30.582%" fy="2.727%" r="102.097%" id="si5h9xf37a">
+            <stop stop-color="#FFF" offset="0%"/>
+            <stop stop-color="#F0F0F0" offset="100%"/>
+        </radialGradient>
+    </defs>
+    <rect width="50" height="50" rx="18" fill="url(#si5h9xf37a)" fill-rule="evenodd"/>
+</svg>

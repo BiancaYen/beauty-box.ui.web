@@ -1,0 +1,1 @@
+export { InstallIcon } from './install';
